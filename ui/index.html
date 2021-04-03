@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数字水印</title>
+    <link rel="stylesheet" href="./css/uikit.min.css">
+    <link rel="stylesheet" href="./css/uikit-rtl.min.css">
+    <script src="./js/uikit.min.js"></script>
+    <script src="./js/uikit-icons.min.js"></script>
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_2464176_niskeu5mv19.css">
+    <link rel="stylesheet" href="./css/footer.css">
+    <style>
+        html {
+            margin: 0;
+            padding: 0;
+        }
+        .uk-navbar-container {
+            box-shadow: 5 5 5 5;
+        }
+        .logo {
+            font-size: xx-large;
+        }
+        #center {
+            height: 100%;
+            text-align: center;
+            overflow: auto;
+        }
+        #upload {
+            padding-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航菜单 -->
+    <div uk-sticky="bottom: #offset">
+        <nav class="uk-navbar-container" uk-navbar>
+            <div class="uk-navbar-left">
+                <a class="uk-navbar-item uk-logo" href="/">
+                    <i class="iconfont icon-shuiyinguanli logo"></i>
+                    &nbspDigital watermarking
+                </a>
+            </div>
+            <div class="uk-navbar-right">
+                <ul class="uk-navbar-nav">
+                    <li>
+                        <a href="/img.html">样图下载</a>
+                    </li>
+                    <li>
+                        <a href="/algorithm.html">算法简介</a>
+                    </li>
+                    <li>
+                        <a href="/about.html">关于</a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/iamwhcn/digital-watermark">仓库</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div id="center" uk-height-viewport="expand: true">
+        <div class="uk-container uk-container-small">
+            <div style="padding-top: 10%;">
+                <h2>给你的图片添加数字水印</h2>
+            </div>
+            <div id="upload">
+                <div class="js-upload uk-placeholder uk-text-center" style="background: #f8f8f8;">
+                    <span uk-icon="icon: cloud-upload"></span>
+                    <span class="uk-text-middle">将图片拖到这里或者</span>
+                    <div uk-form-custom>
+                        <input type="file" multiple>
+                        <span class="uk-link" style="cursor: pointer;">选择一张图片</span>
+                    </div>
+                </div>
+                
+                <progress id="js-progressbar" class="uk-progress" value="0" max="100" hidden></progress>
+            </div>
+        </div>
+        <div class="uk-container uk-container-small">
+            <div style="padding-top: 10%;">
+                <h2>给你的图片添加数字水印</h2>
+            </div>
+            <div id="upload">
+                <div class="js-upload uk-placeholder uk-text-center" style="background: #f8f8f8;">
+                    <span uk-icon="icon: cloud-upload"></span>
+                    <span class="uk-text-middle">将图片拖到这里或者</span>
+                    <div uk-form-custom>
+                        <input type="file" multiple>
+                        <span class="uk-link" style="cursor: pointer;">选择一张图片</span>
+                    </div>
+                </div>
+                
+                <progress id="js-progressbar" class="uk-progress" value="0" max="100" hidden></progress>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    
+    var bar = document.getElementById('js-progressbar');
+
+    UIkit.upload('.js-upload', {
+
+        url: '',
+        multiple: true,
+
+        beforeSend: function () {
+            console.log('beforeSend', arguments);
+        },
+        beforeAll: function () {
+            console.log('beforeAll', arguments);
+        },
+        load: function () {
+            console.log('load', arguments);
+        },
+        error: function () {
+            console.log('error', arguments);
+        },
+        complete: function () {
+            console.log('complete', arguments);
+        },
+
+        loadStart: function (e) {
+            console.log('loadStart', arguments);
+
+            bar.removeAttribute('hidden');
+            bar.max = e.total;
+            bar.value = e.loaded;
+        },
+
+        progress: function (e) {
+            console.log('progress', arguments);
+
+            bar.max = e.total;
+            bar.value = e.loaded;
+        },
+
+        loadEnd: function (e) {
+            console.log('loadEnd', arguments);
+
+            bar.max = e.total;
+            bar.value = e.loaded;
+        },
+
+        completeAll: function () {
+            console.log('completeAll', arguments);
+
+            setTimeout(function () {
+                bar.setAttribute('hidden', 'hidden');
+            }, 1000);
+
+            alert('Upload Completed');
+        }
+
+    });
+
+</script>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数字水印</title>
+    <link rel="stylesheet" href="./css/uikit.min.css">
+    <link rel="stylesheet" href="./css/uikit-rtl.min.css">
+    <script src="./js/uikit.min.js"></script>
+    <script src="./js/uikit-icons.min.js"></script>
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_2464176_niskeu5mv19.css">
+    <style>
+        html {
+            margin: 0;
+            padding: 0;
+        }
+        .uk-navbar-container {
+            box-shadow: 5 5 5 5;
+        }
+        .logo {
+            font-size: xx-large;
+        }
+        #center {
+            height: 100%;
+            text-align: center;
+            overflow: auto;
+        }
+        #upload {
+            padding-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航菜单 -->
+    <div uk-sticky="bottom: #offset">
+        <nav class="uk-navbar-container" uk-navbar>
+            <div class="uk-navbar-left">
+                <a class="uk-navbar-item uk-logo" href="/">
+                    <i class="iconfont icon-shuiyinguanli logo"></i>
+                    &nbspDigital watermarking
+                </a>
+            </div>
+            <div class="uk-navbar-right">
+                <ul class="uk-navbar-nav">
+                    <li>
+                        <a href="/img.html">样图下载</a>
+                    </li>
+                    <li class="uk-active">
+                        <a href="/algorithm.html">算法简介</a>
+                    </li>
+                    <li>
+                        <a href="/about.html">关于</a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/iamwhcn/digital-watermark">仓库</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div id="center" uk-height-viewport="expand: true">
+        <div class="uk-container uk-container-small">
+            <div style="padding-top: 20px; margin-bottom: 10px;">
+                <h2>算法简介</h2>
+            </div>
+            <div style="text-align: left;">
+                <h3>LSB数字水印</h3>
+                基于不可感知的要求，即数据的变化几乎不会引起使用的者的察觉，将水印信息嵌入到数据的最低有
+                效位（Least Significant Bit），也就是将图片的RGB数值转换为二进制数据，然后用水印替换
+                掉最低位，这种变化对于人眼来说是不可察觉的。当然，水印的形式也是多种多样的，有图片，文字
+                等，这里主要介绍如何把图片作为水印写入到另一张图片中。
+                <h3>DTC数字水印</h3>
+                在信号的频域(变换域)中隐藏信息要比在时域中嵌入信息具有更好的鲁棒性。一幅图像经过时域到频
+                域的变换后，可将待隐藏信息嵌入图像的显著区域，这种算法更具抗攻击能力，而且保持了人类感官
+                的不可察觉性。常用的变换域方法有离散余弦变换、离散小波变换和离散傅立叶变换等。
+                <h3>Arnold图像置乱</h3>
+                利用Arnold变换（又称猫脸变换）可以对图像进行置乱，使得原本有意义的图像变成一张无意义的图
+                像。该变换可以在其它图像处理前对图像做预处理，例如在数字盲水印嵌入前对水印进行置乱。也可以
+                用于普通的图像加密。通常一次Arnold变换达不到理想效果，需要对图像进行连续多次的变换。Arnold
+                变换具有周期性，即对图像连续进行Arnold变换，最终又能得到原图像。变换的周期和图像的尺寸有关。
+                当图像是一张方形的图像时，Arnold变换存在逆变换。经过N次Arnold变换后的数据可以通过N次逆变
+                换恢复数据。Arnold变换不仅可以用于图像置乱，也可以用于其它数据的置乱和加密。
+            </div>
+        </div>
+    </div>
+</body>
+</html>

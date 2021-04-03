@@ -44,5 +44,5 @@ def text2img(text, width, height, mode='1', fontsize=30):
     
 
 if __name__=='__main__':
-    img = text2img(u"中文字符1234567890ABCDEFGHIJKLMNabcdefghijklmn", 300, 300, fontsize=50)
+    img = text2img(u"中文字符1234567890ABCDEFGHIJKLMNabcdefghijklmn", 300, 300, mode='RGB', fontsize=50)
     img.show()

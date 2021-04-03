@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数字水印</title>
+    <link rel="stylesheet" href="./css/uikit.min.css">
+    <link rel="stylesheet" href="./css/uikit-rtl.min.css">
+    <script src="./js/uikit.min.js"></script>
+    <script src="./js/uikit-icons.min.js"></script>
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_2464176_niskeu5mv19.css">
+    <style>
+        html {
+            margin: 0;
+            padding: 0;
+        }
+        .uk-navbar-container {
+            box-shadow: 5 5 5 5;
+        }
+        .logo {
+            font-size: xx-large;
+        }
+        #center {
+            height: 100%;
+            text-align: center;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航菜单 -->
+    <div uk-sticky="bottom: #offset">
+        <nav class="uk-navbar-container" uk-navbar>
+            <div class="uk-navbar-left">
+                <a class="uk-navbar-item uk-logo" href="/">
+                    <i class="iconfont icon-shuiyinguanli logo"></i>
+                    &nbspDigital watermarking
+                </a>
+            </div>
+            <div class="uk-navbar-right">
+                <ul class="uk-navbar-nav">
+                    <li class="uk-active">
+                        <a href="/img.html">样图下载</a>
+                    </li>
+                    <li>
+                        <a href="/algorithm.html">算法简介</a>
+                    </li>
+                    <li>
+                        <a href="/about.html">关于</a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/iamwhcn/digital-watermark">仓库</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div id="center" uk-height-viewport="expand: true">
+        <div class="uk-container uk-container-small">
+            <div style="padding-top: 20px; margin-bottom: 30px;">
+                <h2>样图下载</h2>
+            </div>
+            <div class="uk-child-width-1-3@m uk-grid uk-grid-stack" uk-grid="" uk-lightbox="animation: slide">
+                <div class="uk-first-column">
+                    <a class="uk-inline" href="img/lena.png" data-caption="Caption 1">
+                        <img src="img/lena.png" alt="">
+                    </a>
+                </div>
+                <div class="uk-grid-margin uk-first-column">
+                    <a class="uk-inline" href="img/cat.jpg" data-caption="Caption 2">
+                        <img src="img/cat.jpg" alt="">
+                    </a>
+                </div>
+                <div class="uk-grid-margin uk-first-column">
+                    <a class="uk-inline" href="img/cat2.jpg" data-caption="Caption 3">
+                        <img src="img/cat2.jpg" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="uk-child-width-1-3@m uk-grid uk-grid-stack" uk-grid="" uk-lightbox="animation: slide">
+                <div class="uk-first-column">
+                    <a class="uk-inline" href="img/water.jpg" data-caption="Caption 1">
+                        <img src="img/water.jpg" alt="">
+                    </a>
+                </div>
+                <div class="uk-grid-margin uk-first-column">
+                    <a class="uk-inline" href="img/img5.jpg" data-caption="Caption 2">
+                        <img src="img/img5.jpg" alt="">
+                    </a>
+                </div>
+                <div class="uk-grid-margin uk-first-column">
+                    <a class="uk-inline" href="img/img6.jpg" data-caption="Caption 3">
+                        <img src="img/img6.jpg" alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
