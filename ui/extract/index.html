@@ -156,6 +156,7 @@
         });
         
         $('#btn-submit').click(function (ev) {
+            $('#notice').hide();
             var algorithm = $('#algorithm option:selected').val();
             var marked_pic = null;
             if ($('input[name=marked_pic]')[0].files.length > 0) {
