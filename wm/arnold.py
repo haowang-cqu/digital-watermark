@@ -2,11 +2,11 @@ import numpy as np
 from PIL import Image
 
 
-def arnold_encode(image, shuffle_times, a, b, mode='1'):
+def arnold_encode(image, shuffle_times=5, a=1234, b=1234, mode='1'):
     """ Arnold 置乱
     """
+    image = np.array(image)
     arnold_image = np.zeros(shape=image.shape, dtype=image.dtype)
-    print(image.shape)
     h, w = image.shape[0], image.shape[1]
     N = h
     for _ in range(shuffle_times):
@@ -18,12 +18,13 @@ def arnold_encode(image, shuffle_times, a, b, mode='1'):
                     arnold_image[new_x, new_y] = image[ori_x, ori_y]
                 else:
                     arnold_image[new_x, new_y, :] = image[ori_x, ori_y, :]
-    return arnold_image
+    return Image.fromarray(arnold_image)
 
 
-def arnold_decode(image, shuffle_times, a, b, mode='1'):
+def arnold_decode(image, shuffle_times=5, a=1234, b=1234, mode='1'):
     """ 恢复 Arnold 置乱
     """
+    image = np.array(image)
     decode_image = np.zeros(shape=image.shape, dtype=image.dtype)
     h, w = image.shape[0], image.shape[1]
     N = h
@@ -36,16 +37,14 @@ def arnold_decode(image, shuffle_times, a, b, mode='1'):
                     decode_image[new_x, new_y] = image[ori_x, ori_y]
                 else:
                     decode_image[new_x, new_y, :] = image[ori_x, ori_y, :]
-    return decode_image
+    return Image.fromarray(decode_image)
 
 
 if __name__=='__main__':
-    shuffle_times, a, b = 5, 1234, 1234
-    mode = '1'
-    from wm.text2img import text2img
-    img = text2img(u'测试图像', 300, mode=mode, fontsize=50)
-    img.save('before.png')
-    encode_img = arnold_encode(np.array(img), shuffle_times, a, b, mode=mode)
-    Image.fromarray(encode_img).save('encode.png')
-    decode_img = arnold_decode(encode_img, shuffle_times, a, b, mode=mode)
-    Image.fromarray(decode_img).save('after.png')
+    from text2img import text2img
+    img = text2img(u'测试图像', 300, mode='1', fontsize=50)
+    img.save('temp/before.png')
+    encode_img = arnold_encode(img)
+    encode_img.save('temp/encode.png')
+    decode_img = arnold_decode(encode_img)
+    decode_img.save('temp/after.png')

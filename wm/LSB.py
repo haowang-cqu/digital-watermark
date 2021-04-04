@@ -1,39 +1,41 @@
 import numpy as np
 from PIL import Image
-def get_RGB(pic_path,mark_path):
-    mark=Image.open(mark_path)
-    pic=Image.open(pic_path)
-    #先转换为黑白
-    mark=mark.convert("L")
-    #转换成RGB格式
-    mark=mark.convert("RGB")
-    pic=pic.convert("RGB")
-    return pic,mark
+import numpy as np
+from PIL import Image, ImageDraw, ImageFont
+from text2img import *
+from arnold import *
 
-def LSB_encode(pic,mark):
-    for i in range(mark.size[0]):
-        for j in range(mark.size[1]):
-            rgb = pic.getpixel((i, j))
-            r=rgb[0]
-            g=rgb[1]
-            b=rgb[2]
-            if mark.getpixel((i,j))==(255,255,255):
-                b=b-b%2+1
-            elif mark.getpixel((i,j))==(0,0,0):
-                b=b-b%2+0
-            pic.putpixel((i,j),(r,g,b))
-    pic.save("test1.png")
 
-def get_water(pic):
-    img=Image.new('RGB',(pic.size[0],pic.size[1]))
-    for i in range(pic.size[0]):
-        for j in range(pic.size[1]):
-            rgb=pic.getpixel((i,j))
-            if rgb[2]%2==0:
-                img.putpixel((i,j),(0,0,0))
-            elif rgb[2]%2==1:
-                img.putpixel((i,j),(255,255,255))
-    img.save("mark1.png")
-pic,mark=get_RGB("./123.jpg","./digital_mark.png")
-LSB_encode(pic,mark)
-get_water(pic)
+def embed_LSB(pic, mark, confuse=False):
+    if confuse:
+        mark = arnold_encode(mark)
+    pic = np.array(pic)
+    mark = np.array(mark)
+    for i in range(mark.shape[0]):
+        for j in range(mark.shape[1]):
+            blue = pic[i, j, 2]
+            pic[i, j, 2] = blue - blue % 2 + mark[i][j]
+    return Image.fromarray(pic)
+
+
+def extract_LSB(pic, confuse=False):
+    pic = np.array(pic)
+    mark = np.zeros((pic.shape[0], pic.shape[1])).astype(np.bool)
+    for i in range(pic.shape[0]):
+        for j in range(pic.shape[1]):
+            mark[i, j] = pic[i, j, 2] % 2
+    mark = Image.fromarray(mark)
+    if confuse:
+        mark = arnold_encode(mark)
+    return mark
+
+
+if __name__=='__main__':
+    from text2img import text2img
+    mark = text2img(u'测试水印', 300, mode='1', fontsize=50)
+    pic = Image.open('temp/lena.png')
+    confuse = False
+    pic_marked = embed_LSB(pic, mark, confuse=confuse)
+    pic_marked.save('temp/lsb_pic_marked.png')
+    ext_mark = extract_LSB(pic_marked, confuse=confuse)
+    ext_mark.save('temp/lsb_ext_mark.png')
