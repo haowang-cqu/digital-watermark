@@ -3,6 +3,13 @@ import os
 
 basedir = os.path.split(os.path.realpath(__file__))[0]
 
+fonts = {
+    'SimSun': basedir + 'fonts/simsun.ttc', 
+    'SimHei': basedir + 'fonts/simhei.ttf',
+    'SimKai': basedir + 'fonts/simkai.ttf',
+    'Microsoft YaHei': basedir + 'fonts/msyh.ttc'
+}
+
 def textwrap(text, width, font):
     """文本换行
     """
@@ -18,15 +25,17 @@ def textwrap(text, width, font):
     return lines
 
 
-def text2img(text, width, height, mode='1', fontsize=30):
-    """文本转二值图
+def text2img(text, size, mode='1', fontname='SimSun', fontsize=30):
+    """文本转图像
     mode='1' 二值图
     mode='RGB' RGB图
     """
-    font = ImageFont.truetype(basedir + "/fonts/YaHei Consolas Hybrid 1.12.ttf", fontsize)
-    lines = textwrap(text, width, font)
+    if fontname not in fonts:
+        fontname = 'SimSun'
+    font = ImageFont.truetype(fonts[fontname], fontsize)
+    lines = textwrap(text, size, font)
     if mode == '1':
-        img = Image.new(mode, (width, height), 0)
+        img = Image.new(mode, (size, size), 0)
         dr = ImageDraw.Draw(img)
         y = 0
         for line in lines:
@@ -34,7 +43,7 @@ def text2img(text, width, height, mode='1', fontsize=30):
             y += 1.5 * fontsize # 1.5 倍行距
         return img
     elif mode == 'RGB':
-        img = Image.new(mode, (width, height), (0, 0, 0))
+        img = Image.new(mode, (size, size), (0, 0, 0))
         dr = ImageDraw.Draw(img)
         y = 0
         for line in lines:
@@ -46,5 +55,5 @@ def text2img(text, width, height, mode='1', fontsize=30):
     
 
 if __name__=='__main__':
-    img = text2img(u"中文字符1234567890ABCDEFGHIJKLMNabcdefghijklmn", 300, 300, mode='RGB', fontsize=50)
+    img = text2img(u"中文字符1234567890ABCDEFGHIJKLMNabcdefghijklmn", 300, mode='RGB', fontname='aaa', fontsize=50)
     img.show()

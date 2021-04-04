@@ -42,8 +42,8 @@ def arnold_decode(image, shuffle_times, a, b, mode='1'):
 if __name__=='__main__':
     shuffle_times, a, b = 5, 1234, 1234
     mode = '1'
-    from text2img import text2img
-    img = text2img(u'测试图像', 300, 200, mode=mode, fontsize=50)
+    from wm.text2img import text2img
+    img = text2img(u'测试图像', 300, mode=mode, fontsize=50)
     img.save('before.png')
     encode_img = arnold_encode(np.array(img), shuffle_times, a, b, mode=mode)
     Image.fromarray(encode_img).save('encode.png')

@@ -14,23 +14,22 @@ def hello_world():
 
 @app.route('/getmark')
 def getmark():
-    font =  request.args.get('font', '')
+    fontname =  request.args.get('fontname', 'Microsoft YaHei')
     fontsize = int(request.args.get('fontsize', 15))
-    text = request.args.get('text', '')
-    print(text)
+    text = request.args.get('text', 'Nothing')
     size = int(request.args.get('size', 100))
-    img = text2img(text, size, size, 'RGB', fontsize=fontsize)
+    img = text2img(text, size, 'RGB', fontname=fontname, fontsize=fontsize)
     buffered = BytesIO()
     img.save(buffered, format="JPEG")
     b64_img = base64.b64encode(buffered.getvalue()).decode()
     return 'data:image/jpeg;base64,' + b64_img
 
 
-@app.route('embed', methods=["POST"])
+@app.route('/embed', methods=["POST"])
 def embed():
     return ''
 
 
-@app.route('extract', methods=["POST"])
+@app.route('/extract', methods=["POST"])
 def extract():
     return ''
