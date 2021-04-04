@@ -72,9 +72,42 @@
             </div>
             <div class="uk-margin-medium-top" style="text-align: left;">
                 <h3>项目简介</h3>
+                本项目实现了多种数字水印技术，其中包括基于 LSB 的数字水印、基于 DTC 的数字水印以及
+                基于 DWT 的数字水印，这些算法的介绍见<a href="/algorithm/">该页</a>。在实现各
+                种水印算法的基础上我们又将其制作为了一套完整的 API 接口，并基于该接口实现了一个友好
+                的 web 界面。
                 <h3>人员分工</h3>
+                <div class="uk-overflow-auto">
+                    <table class="uk-table uk-table-hover uk-table-middle uk-table-divider">
+                        <thead>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>王浩</td>
+                                <td class="uk-table-link">
+                                    后端接口和前端实现、项目管理、文档撰写
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>李涵威</td>
+                                <td class="uk-table-link">
+                                    数字水印算法开发、文献查找、接口调试、文档撰写
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <h3>技术细节</h3>
-                
+                本项目基于 Python 开发，使用 Numpy 完成图像处理。前后端分离架构，后端实现为 REST API，前端通过 jQuery ajax 进行交互。在项目中使用了如下技术：
+                <ul class="uk-list uk-list-bullet">
+                    <li>图像处理: Numpy、Scipy、Pillow</li>
+                    <li>前端框架: UIkit</li>
+                    <li>后端框架: Flask</li>
+                </ul>
+                <h3>参考文献</h3>
+                [1] 尹浩, 林闯, 邱锋, 等. 数字水印技术综述[J]. 计算机研究与发展, 2005, 42(7): 1093.
+                <br />
+                [2] Jiansheng M, Sukang L, Xiaomei T. A digital watermarking algorithm based on DCT and DWT[C]//Proceedings. The 2009 International Symposium on Web Information Systems and Applications (WISA 2009). Academy publisher, 2009: 104.
             </div>
         </div>
     </div>
