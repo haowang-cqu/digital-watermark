@@ -96,7 +96,20 @@ def embed():
 
 @app.route('/extract', methods=["POST"])
 def extract():
-    return {'status': 'ok'}
+    algorithm = request.form.get('algorithm')
+    marked_pic = request.files.get('marked_pic')
+    pic = request.files.get('pic')
+    mark = request.files.get('mark')
+    if algorithm == 'LSB':
+        ext_mark = extract_LSB(Image.open(marked_pic))
+    elif algorithm == 'DCT':
+        ext_mark = extract_DCT(Image.open(pic), Image.open(marked_pic))
+    else:
+        ext_mark = extract_DWT(Image.open(marked_pic), Image.open(mark))
+    buffered = BytesIO()
+    ext_mark.save(buffered, format="JPEG")
+    b64_img = 'data:image/jpeg;base64,' + base64.b64encode(buffered.getvalue()).decode()
+    return {'status': 'ok', 'mark': b64_img}
 
 
 @app.route('/temp/<string:filename>', methods=['GET'])
