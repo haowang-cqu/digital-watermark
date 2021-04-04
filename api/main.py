@@ -63,7 +63,7 @@ def do_embed(algorithm, pic, mark):
     elif algorithm == 'DCT':
         marked = embed_DCT(pic, mark)
     else:
-        marked = embed_DCT(pic, mark)
+        marked = embed_DWT(pic, mark)
     return marked
 
 

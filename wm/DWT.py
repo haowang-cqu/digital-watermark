@@ -86,8 +86,10 @@ def extract_DWT(marked, mark):
 
 if __name__=='__main__':
     mark = text2img(u'测试水印', 50, mode='1', fontsize=20)
+    mark.save('temp/DWT_mark.png')
     pic = Image.open('temp/lena.png')
     pic_marked = embed_DWT(pic, mark)
     pic_marked.save('temp/DWT_pic_marked.png')
-    ext_mark = extract_DWT(pic_marked, mark)
+    ext_mark = extract_DWT(pic_marked, Image.open('temp/DWT_mark.png'))
     ext_mark.save('temp/DWT_ext_mark.png')
+    # extract_DWT(Image.open('temp/a-pic.png'), Image.open('temp/a-mark.png')).show()
