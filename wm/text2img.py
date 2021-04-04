@@ -1,5 +1,7 @@
 from PIL import Image,ImageFont,ImageDraw
+import os
 
+basedir = os.path.split(os.path.realpath(__file__))[0]
 
 def textwrap(text, width, font):
     """文本换行
@@ -21,7 +23,7 @@ def text2img(text, width, height, mode='1', fontsize=30):
     mode='1' 二值图
     mode='RGB' RGB图
     """
-    font = ImageFont.truetype("./fonts/YaHei Consolas Hybrid 1.12.ttf", fontsize)
+    font = ImageFont.truetype(basedir + "/fonts/YaHei Consolas Hybrid 1.12.ttf", fontsize)
     lines = textwrap(text, width, font)
     if mode == '1':
         img = Image.new(mode, (width, height), 0)
