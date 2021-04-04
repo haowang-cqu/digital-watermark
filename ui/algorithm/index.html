@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>数字水印</title>
-    <link rel="stylesheet" href="./css/uikit.min.css">
-    <link rel="stylesheet" href="./css/uikit-rtl.min.css">
-    <script src="./js/uikit.min.js"></script>
-    <script src="./js/uikit-icons.min.js"></script>
+    <title>Digital watermarking | 算法简介</title>
+    <link rel="stylesheet" href="/css/uikit.min.css">
+    <link rel="stylesheet" href="/css/uikit-rtl.min.css">
+    <script src="/js/uikit.min.js"></script>
+    <script src="/js/uikit-icons.min.js"></script>
     <link rel="stylesheet" href="//at.alicdn.com/t/font_2464176_niskeu5mv19.css">
     <style>
         html {
@@ -44,13 +44,19 @@
             <div class="uk-navbar-right">
                 <ul class="uk-navbar-nav">
                     <li>
-                        <a href="/img.html">样图下载</a>
-                    </li>
-                    <li class="uk-active">
-                        <a href="/algorithm.html">算法简介</a>
+                        <a href="/">嵌入水印</a>
                     </li>
                     <li>
-                        <a href="/about.html">关于</a>
+                        <a href="/extract/">提取水印</a>
+                    </li>
+                    <li>
+                        <a href="/sample/">样图下载</a>
+                    </li>
+                    <li class="uk-active">
+                        <a href="/algorithm/">算法简介</a>
+                    </li>
+                    <li>
+                        <a href="/about/">关于</a>
                     </li>
                     <li>
                         <a href="https://github.com/iamwhcn/digital-watermark">仓库</a>
@@ -61,10 +67,10 @@
     </div>
     <div id="center" uk-height-viewport="expand: true">
         <div class="uk-container uk-container-small">
-            <div style="padding-top: 20px; margin-bottom: 10px;">
+            <div class="uk-margin-medium-top">
                 <h2>算法简介</h2>
             </div>
-            <div style="text-align: left;">
+            <div class="uk-margin-medium-top" style="text-align: left;">
                 <h3>LSB数字水印</h3>
                 基于不可感知的要求，即数据的变化几乎不会引起使用的者的察觉，将水印信息嵌入到数据的最低有
                 效位（Least Significant Bit），也就是将图片的RGB数值转换为二进制数据，然后用水印替换

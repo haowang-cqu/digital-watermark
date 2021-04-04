@@ -2,8 +2,8 @@ import numpy as np
 from PIL import Image
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
-from text2img import *
-from arnold import *
+from wm.text2img import text2img
+from wm.arnold import arnold_encode, arnold_decode
 
 
 def embed_LSB(pic, mark, confuse=False):
@@ -31,7 +31,6 @@ def extract_LSB(pic, confuse=False):
 
 
 if __name__=='__main__':
-    from text2img import text2img
     mark = text2img(u'测试水印', 300, mode='1', fontsize=50)
     pic = Image.open('temp/lena.png')
     confuse = False

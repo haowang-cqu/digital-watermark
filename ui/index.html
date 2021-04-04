@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>数字水印</title>
+    <title>Digital watermarking | 嵌入水印</title>
     <link rel="stylesheet" href="./css/uikit.min.css">
     <link rel="stylesheet" href="./css/uikit-rtl.min.css">
-    <script src="./js/uikit.min.js"></script>
-    <script src="./js/uikit-icons.min.js"></script>
+    <script src="/js/uikit.min.js"></script>
+    <script src="/js/uikit-icons.min.js"></script>
+    <script src="/js/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="//at.alicdn.com/t/font_2464176_niskeu5mv19.css">
-    <link rel="stylesheet" href="./css/footer.css">
     <style>
         html {
             margin: 0;
@@ -27,9 +27,6 @@
             text-align: center;
             overflow: auto;
         }
-        #upload {
-            padding-top: 30px;
-        }
     </style>
 </head>
 <body>
@@ -44,14 +41,20 @@
             </div>
             <div class="uk-navbar-right">
                 <ul class="uk-navbar-nav">
-                    <li>
-                        <a href="/img.html">样图下载</a>
+                    <li class="uk-active">
+                        <a href="/">嵌入水印</a>
                     </li>
                     <li>
-                        <a href="/algorithm.html">算法简介</a>
+                        <a href="/extract/">提取水印</a>
                     </li>
                     <li>
-                        <a href="/about.html">关于</a>
+                        <a href="/sample/">样图下载</a>
+                    </li>
+                    <li>
+                        <a href="/algorithm/">算法简介</a>
+                    </li>
+                    <li>
+                        <a href="/about/">关于</a>
                     </li>
                     <li>
                         <a href="https://github.com/iamwhcn/digital-watermark">仓库</a>
@@ -62,99 +65,182 @@
     </div>
     <div id="center" uk-height-viewport="expand: true">
         <div class="uk-container uk-container-small">
-            <div style="padding-top: 10%;">
-                <h2>给你的图片添加数字水印</h2>
+            <div class="uk-margin-medium-top">
+                <h2>嵌入水印</h2>
             </div>
-            <div id="upload">
-                <div class="js-upload uk-placeholder uk-text-center" style="background: #f8f8f8;">
-                    <span uk-icon="icon: cloud-upload"></span>
-                    <span class="uk-text-middle">将图片拖到这里或者</span>
-                    <div uk-form-custom>
-                        <input type="file" multiple>
-                        <span class="uk-link" style="cursor: pointer;">选择一张图片</span>
+            <div class="uk-grid-collapse uk-child-width-expand@s uk-text-center uk-margin-medium-top" uk-grid>
+                <div>
+                    <div class="uk-align-center">
+                        <img id="preview" src="/img/lena.png" style="max-width: 405px" alt="预览图片">
                     </div>
                 </div>
-                
-                <progress id="js-progressbar" class="uk-progress" value="0" max="100" hidden></progress>
-            </div>
-        </div>
-        <div class="uk-container uk-container-small">
-            <div style="padding-top: 10%;">
-                <h2>给你的图片添加数字水印</h2>
-            </div>
-            <div id="upload">
-                <div class="js-upload uk-placeholder uk-text-center" style="background: #f8f8f8;">
-                    <span uk-icon="icon: cloud-upload"></span>
-                    <span class="uk-text-middle">将图片拖到这里或者</span>
-                    <div uk-form-custom>
-                        <input type="file" multiple>
-                        <span class="uk-link" style="cursor: pointer;">选择一张图片</span>
-                    </div>
+
+                <div>
+                    <form class="uk-grid-small" uk-grid>
+                        <div class="uk-width-1-1">
+                            <div uk-form-custom="target: true" style="width: 100%;">
+                                <input type="file" name="image">
+                                <input class="uk-input" type="text" placeholder="选择图片" disabled>
+                            </div>
+                        </div>
+                        <div class="uk-width-1-1">
+                            <select id="algorithm" class="uk-select">
+                                <option value="LSB">LSB</option>
+                                <option value="DCT">DCT</option>
+                                <option value="DWT">DWT</option>
+                            </select>
+                        </div>
+                        <!-- <div class="uk-width-1-2@s">
+                            <select id="shuffle" class="uk-select">
+                                <option value="no">不置乱</option>
+                                <option value="arnold">Arnold置乱</option>
+                            </select>
+                        </div> -->
+                        <div class="uk-width-1-2@s">
+                            <select id="fontname" class="uk-select">
+                                <option value="Microsoft YaHei" selected>微软雅黑</option>
+                                <option value="SimSun">宋体</option>
+                                <option value="SimHei">黑体</option>
+                                <option value="SimKai">楷体</option>
+                            </select>
+                        </div>
+                        <div class="uk-width-1-2@s">
+                            <select id="fontsize" class="uk-select">
+                                <option value="5">5px</option>
+                                <option value="10">10px</option>
+                                <option value="12">12px</option>
+                                <option value="14">14px</option>
+                                <option value="16">16px</option>
+                                <option value="18">18px</option>
+                                <option value="20" selected>20px</option>
+                                <option value="30">30px</option>
+                                <option value="40">40px</option>
+                                <option value="50">50px</option>
+                            </select>
+                        </div>
+                        
+                        <div class="uk-width-1-1">
+                            <input id="size" class="uk-input" type="number" oninput="if(value<0)value=0" placeholder="水印大小（像素）">
+                        </div>
+                        <div class="uk-width-1-1">
+                            <textarea id="text" class="uk-textarea" rows="5" placeholder="水印文本"></textarea>
+                        </div>
+                        <div class="uk-width-1-2@s">
+                            <button id="btn-preview" type="button" class="uk-button uk-button-primary uk-width-1-1">水印预览</button>
+                        </div>
+                        <div class="uk-width-1-2@s">
+                            <button id="btn-submit" type="button" class="uk-button uk-button-primary uk-width-1-1">嵌入水印</button>
+                        </div>
+                    </form>
                 </div>
-                
-                <progress id="js-progressbar" class="uk-progress" value="0" max="100" hidden></progress>
+            </div>
+            <div id="notice" class="uk-margin-medium-top" style="display: none;">
+            水印添加完毕，点击<a href="#">下载图片</a>或者<a href="#">下载水印</a>
             </div>
         </div>
     </div>
 </body>
 <script>
-    
-    var bar = document.getElementById('js-progressbar');
-
-    UIkit.upload('.js-upload', {
-
-        url: '',
-        multiple: true,
-
-        beforeSend: function () {
-            console.log('beforeSend', arguments);
-        },
-        beforeAll: function () {
-            console.log('beforeAll', arguments);
-        },
-        load: function () {
-            console.log('load', arguments);
-        },
-        error: function () {
-            console.log('error', arguments);
-        },
-        complete: function () {
-            console.log('complete', arguments);
-        },
-
-        loadStart: function (e) {
-            console.log('loadStart', arguments);
-
-            bar.removeAttribute('hidden');
-            bar.max = e.total;
-            bar.value = e.loaded;
-        },
-
-        progress: function (e) {
-            console.log('progress', arguments);
-
-            bar.max = e.total;
-            bar.value = e.loaded;
-        },
-
-        loadEnd: function (e) {
-            console.log('loadEnd', arguments);
-
-            bar.max = e.total;
-            bar.value = e.loaded;
-        },
-
-        completeAll: function () {
-            console.log('completeAll', arguments);
-
-            setTimeout(function () {
-                bar.setAttribute('hidden', 'hidden');
-            }, 1000);
-
-            alert('Upload Completed');
+    $(function() {
+        function getObjectURL(file) {
+            var url = null;
+            if (window.createObjcectURL != undefined) {
+                url = window.createOjcectURL(file);
+            } else if (window.URL != undefined) {
+                url = window.URL.createObjectURL(file);
+            } else if (window.webkitURL != undefined) {
+                url = window.webkitURL.createObjectURL(file);
+            }
+            return url;
         }
 
-    });
+        $('input[name=image]').change(function(ev) {
+            if (this.files.length > 0) {
+                var url = getObjectURL(this.files[0]);
+                if (url) {
+                    $('#preview').attr('src', url);
+                }
+            }
+        });
 
+        $('#btn-preview').click(function(ev) {
+            var size = $('#size').val();
+            var fontname = $('#fontname option:selected').val();
+            var fontsize = $('#fontsize option:selected').val();
+            var text = $('#text').val();
+            if (size && size.length > 0 && text && text.length > 0) {
+                $.ajax({
+                    url: 'http://localhost:5000/getmark',
+                    data: {
+                        size: size,
+                        fontsize: fontsize,
+                        fontname: fontname,
+                        text: text
+                    },
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.status === 'ok') {
+                            $('#preview').attr('src', data.image);
+                        }
+                    }
+                });
+            } else {
+                UIkit.notification({message: '请正确填写信息', status: 'warning'});
+            }
+        });
+
+        $('#btn-submit').click(function(ev) {
+            var size = $('#size').val();
+            var fontname = $('#fontname option:selected').val();
+            var fontsize = $('#fontsize option:selected').val();
+            var text = $('#text').val();
+            var image = null;
+            if ($('input[name=image]')[0].files.length > 0) {
+                image = $('input[name=image]')[0].files[0];
+            }
+            var algorithm = $('#algorithm option:selected').val();
+            if (image && text && text.length && size && size.length) {
+                var formData = new FormData();
+                formData.append('image', image);
+                formData.append('algorithm', algorithm);
+                formData.append('fontname', fontname);
+                formData.append('fontsize', fontsize);
+                formData.append('size', size);
+                formData.append('text', text);
+                $.ajax({
+                    url: 'http://localhost:5000/embed',
+                    data: formData,
+                    type: 'POST',
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data.status === 'ok') {
+                            var base = '//localhost:5000/temp/';
+                            var mark = base + data.mark;
+                            var marked_pic = base + data.marked_pic;
+                            $('#preview').attr('src', marked_pic);
+                            $('#notice')
+                                .removeClass('uk-text-danger')
+                                .addClass('uk-text-success')
+                                .html('水印添加完毕，点击<a href="'
+                                        + marked_pic + '">下载图片</a>或者<a href="'
+                                        + mark + '">下载水印</a>')
+                                .show();
+                        } else {
+                            $('#notice')
+                                .removeClass('uk-text-success')
+                                .addClass('uk-text-danger')
+                                .html(data.msg)
+                                .show();
+                        }
+                    }
+                });
+            } else {
+                UIkit.notification({message: '请正确填写信息', status: 'warning'});
+            }
+        });
+    });
 </script>
 </html>

@@ -1,8 +1,9 @@
 import numpy as np
 import math
 from PIL import Image, ImageDraw, ImageFont
+import scipy.fftpack
 import scipy
-from text2img import *
+from wm.text2img import text2img
 
 
 def embed_DCT(pic, mark):
@@ -51,7 +52,6 @@ def extract_DCT(pic,marked):
     return img
 
 if __name__=='__main__':
-    from text2img import text2img
     mark = text2img(u'测试水印', 60, mode='1', fontsize=20)
     pic = Image.open('temp/lena.png')
     pic_marked=embed_DCT(pic,mark)

@@ -1,7 +1,7 @@
 import pywt
 import math
 from PIL import Image, ImageDraw, ImageFont
-from text2img import text2img
+from wm.text2img import text2img
 import numpy as np
 import random
 np.set_printoptions(threshold=np.inf)
@@ -85,7 +85,6 @@ def extract_DWT(marked, mark):
 
 
 if __name__=='__main__':
-    from text2img import text2img
     mark = text2img(u'测试水印', 50, mode='1', fontsize=20)
     pic = Image.open('temp/lena.png')
     pic_marked = embed_DWT(pic, mark)
