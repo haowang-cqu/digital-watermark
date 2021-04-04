@@ -6,9 +6,7 @@ from text2img import *
 
 
 def embed_DCT(pic, mark):
-    #mark=text2img(u"test", 100, 100, mode='1', fontsize=30)
     block_width = 8
-    #im=Image.open(pic_path)
     im_array = np.array(pic)
     mark_array=np.array(mark)
     row=mark_array.shape[0]
@@ -21,20 +19,16 @@ def embed_DCT(pic, mark):
                 a=-1
             else:
                 a=1
-            BLOCK=BLOCK*(1+a*0.03)
+            BLOCK=BLOCK*(1+a*0.01)
             BLOCK=scipy.fft.idct(BLOCK).astype(np.uint8)
             im_array[i*block_width:i*block_width+block_width,j*block_width:j*block_width+block_width]=BLOCK
     img = Image.fromarray(im_array)
-    #img.save('DCT_RES.png')
-    #img.show()
     return img
     
 
 def extract_DCT(pic,marked):
     block_width=8
-    #im=Image.open(pic_path)
     im_array=np.array(pic)
-    #marked=Image.open(marked_path)
     marked_array=np.array(marked)
     row=im_array.shape[0]//block_width
     col=im_array.shape[1]//block_width
@@ -49,7 +43,6 @@ def extract_DCT(pic,marked):
             bm=BLOCK_MARKED[1,1,2]
             bo=BLOCK_ORIGIN[1,1,2]
             a=bm/bo-1
-            # print(a)
             if a<0:
                 decode_pic[i,j]=False
             else:
@@ -57,9 +50,6 @@ def extract_DCT(pic,marked):
     img=Image.fromarray(decode_pic)
     return img
 
-
-# insert_mark("test1.png","test.png")
-# dct_decode("test1.png",'DCT_RES.png')
 if __name__=='__main__':
     from text2img import text2img
     mark = text2img(u'测试水印', 60, mode='1', fontsize=20)
