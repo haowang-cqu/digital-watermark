@@ -19,7 +19,7 @@ def embed_DCT(pic, mark):
                 a=-1
             else:
                 a=1
-            BLOCK=BLOCK*(1+a*0.01)
+            BLOCK[:,:,2]=BLOCK[:,:,2]*(1+a*0.03)
             BLOCK=scipy.fft.idct(BLOCK).astype(np.uint8)
             im_array[i*block_width:i*block_width+block_width,j*block_width:j*block_width+block_width]=BLOCK
     img = Image.fromarray(im_array)
