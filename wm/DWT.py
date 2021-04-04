@@ -6,16 +6,26 @@ import numpy as np
 import random
 import cv2
 np.set_printoptions(threshold=np.inf)
-def pre_process(pic_path,mark_text):
-    pic=Image.open(pic_path)
-    pic=pic.convert('L')#转换成灰度图
-    pic_array=np.array(pic).astype(np.float32)#转换成float32的numpy array
-    mark=text2img(mark_text,100,mode='1', fontsize=60)
-    mark_array=np.array(mark).astype(np.bool)
-    mark.save('mark.png')
-    return pic_array,mark_array
+# def pre_process(pic_path,mark_text):
+#     pic=Image.open(pic_path)
+#     pic=pic.convert('L')#转换成灰度图
+#     pic_array=np.array(pic).astype(np.float32)#转换成float32的numpy array
+#     mark=text2img(mark_text,100,mode='1', fontsize=60)
+#     mark_array=np.array(mark).astype(np.bool)
+#     mark.save('mark.png')
+#     return pic_array,mark_array
 
-def embed_mark(pic_array,mark_array):
+def embed_mark(pic_path,mark_path):
+    '''
+    输入要加入水印的图片路径，以及水印路径
+    '''
+    pic=Image.open(pic_path)
+    pic=pic.convert('L')
+    pic_array=np.array(pic).astype(np.float32)
+    
+    mark=Image.open(mark_path)
+    mark_array=np.array(mark).astype(np.bool)
+
     pic_h,pic_w=pic_array.shape[:2]
     mark_h,mark_w=mark_array.shape[:2]
     mark_array_copy=mark_array.copy()
@@ -53,12 +63,12 @@ def embed_mark(pic_array,mark_array):
     img=img.convert("RGB")
     img.save('marked.png')
     
-def excet_mark(marked_pic,mark):
+def excet_mark(marked_pic_path,mark_path):
     """
-    输入嵌入水印后的图片以及水印
+    输入嵌入水印后的图片路径以及水印的路径
     """
-    marked_pic=Image.open(marked_pic).convert('L')
-    mark=Image.open(mark)
+    marked_pic=Image.open(marked_pic_path).convert('L')
+    mark=Image.open(mark_path)
     mark_array=np.array(mark).astype(np.bool)
     marked_pic_array=np.array(marked_pic).astype(np.float32)
     mark_h,mark_w=mark_array.shape[:2]
@@ -83,12 +93,12 @@ def excet_mark(marked_pic,mark):
     #print(res_mark)
     res_mark=res_mark.reshape(mark_array.shape)
     img=Image.fromarray(res_mark)
-    img.show()
+    #img.show()
     img.save('get_mark.png')
 
         
-if __name__=='__main__':
-    pic_path='C:\\Users\\LHW\\Desktop\\Lenna.png'
-    pic_array,mark_array=pre_process(pic_path,"test")
-    # embed_mark(pic_array,mark_array)
-    excet_mark('marked.png','mark.png')
+# if __name__=='__main__':
+#     # pic_path='C:\\Users\\LHW\\Desktop\\Lenna.png'
+#     # pic_array,mark_array=pre_process(pic_path,"test")
+#     embed_mark(pic_array,mark_array)
+#     excet_mark('marked.png','mark.png')
