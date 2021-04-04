@@ -10,6 +10,7 @@
     <script src="/js/uikit.min.js"></script>
     <script src="/js/uikit-icons.min.js"></script>
     <link rel="stylesheet" href="//at.alicdn.com/t/font_2464176_niskeu5mv19.css">
+    <script src="/js/jquery-3.6.0.min.js"></script>
     <style>
         html {
             margin: 0;
@@ -73,73 +74,135 @@
                         预览
                     </div> -->
                     <div>
-                        <img src="/img/lena.png" style="max-width: 405px" alt="">
+                        <img id="preview" src="/img/lena.png" style="max-width: 405px" alt="">
                     </div>
                 </div>
 
                 <div>
+                    <div class="uk-text-warning uk-margin-small-bottom" style="text-align: left; margin-left: 20px;">
+                        注意：LSB 只需要含水印图片，DTC 需要原图和含水印图片，DWT需要含水印图片和水印。
+                    </div>
                     <form class="uk-grid-small" uk-grid>
+                        <div id="algorithm" class="uk-width-1-1">
+                            <select class="uk-select">
+                                <option value="LSB">LSB</option>
+                                <option value="DCT">DCT</option>
+                                <option value="DWT">DWT</option>
+                            </select>
+                        </div>
                         <div class="uk-width-1-1">
                             <div uk-form-custom="target: true" style="width: 100%;">
-                                <input type="file">
-                                <input class="uk-input" type="text" placeholder="选择图片" disabled>
+                                <input type="file" name="marked_pic">
+                                <input class="uk-input" type="text" placeholder="含水印图片" disabled>
                             </div>
                         </div>
-                        <div class="uk-width-1-2@s">
-                            <select class="uk-select">
-                                <option>LSB</option>
-                                <option>DCT</option>
-                                <option>DWT</option>
-                            </select>
-                        </div>
-                        <div class="uk-width-1-2@s">
-                            <select class="uk-select">
-                                <option>不置乱</option>
-                                <option>Arnold置乱</option>
-                                <option>骑士巡游置乱</option>
-                            </select>
-                        </div>
-                        <div class="uk-width-1-2@s">
-                            <select class="uk-select">
-                                <option>微软雅黑</option>
-                                <option>宋体</option>
-                                <option>黑体</option>
-                                <option>楷体</option>
-                            </select>
-                        </div>
-                        <div class="uk-width-1-2@s">
-                            <select class="uk-select">
-                                <option>5px</option>
-                                <option>10px</option>
-                                <option>12px</option>
-                                <option>14px</option>
-                                <option>16px</option>
-                                <option>18px</option>
-                                <option>20px</option>
-                                <option>30px</option>
-                                <option>40px</option>
-                                <option>50px</option>
-                            </select>
-                        </div>
-                        
                         <div class="uk-width-1-1">
-                            <input class="uk-input" type="text" placeholder="水印大小(px)">
+                            <div uk-form-custom="target: true" style="width: 100%;">
+                                <input type="file" name="pic" disabled>
+                                <input class="uk-input" type="text" placeholder="原图" disabled>
+                            </div>
                         </div>
                         <div class="uk-width-1-1">
-                            <textarea class="uk-textarea" rows="5" placeholder="Textarea"></textarea>
+                            <div uk-form-custom="target: true" style="width: 100%;">
+                                <input type="file" name="mark" disabled>
+                                <input class="uk-input" type="text" placeholder="水印" disabled>
+                            </div>
                         </div>
-                        <div class="uk-width-1-2@s">
-                            <button type="button" class="uk-button uk-button-primary uk-width-1-1">水印预览</button>
-                        </div>
-                        <div class="uk-width-1-2@s">
-                            <button type="button" class="uk-button uk-button-primary uk-width-1-1">添加水印</button>
+                        <div class="uk-width-1-1">
+                            <button id="btn-submit" type="button" class="uk-button uk-button-primary uk-width-1-1">提取水印</button>
                         </div>
                     </form>
                 </div>
             </div>
+            <div id="notice" class="uk-margin-medium-top" style="display: none;"></div>
         </div>
-    </div>
+    </div
 </body>
 <script>
+    $(function () {
+        $('#algorithm').change(function (ev) {
+            var algorithm = $('#algorithm option:selected').val();
+            if (algorithm === 'DCT') {
+                $('input[name=pic]').removeAttr('disabled');
+                $('input[name=mark]').attr('disabled','disabled');
+            } else if (algorithm === 'LSB') {
+                $('input[name=pic]').attr('disabled','disabled');
+                $('input[name=mark]').attr('disabled','disabled');
+            } else {
+                $('input[name=pic]').attr('disabled','disabled');
+                $('input[name=mark]').removeAttr('disabled');
+            }
+        });
+
+        function getObjectURL(file) {
+            var url = null;
+            if (window.createObjcectURL != undefined) {
+                url = window.createOjcectURL(file);
+            } else if (window.URL != undefined) {
+                url = window.URL.createObjectURL(file);
+            } else if (window.webkitURL != undefined) {
+                url = window.webkitURL.createObjectURL(file);
+            }
+            return url;
+        }
+
+        $('input[name=marked_pic]').change(function(ev) {
+            if (this.files.length > 0) {
+                var url = getObjectURL(this.files[0]);
+                if (url) {
+                    $('#preview').attr('src', url);
+                }
+            }
+        });
+        
+        $('#btn-submit').click(function (ev) {
+            var algorithm = $('#algorithm option:selected').val();
+            var marked_pic = null;
+            if ($('input[name=marked_pic]')[0].files.length > 0) {
+                marked_pic = $('input[name=marked_pic]')[0].files[0];
+            }
+            var pic = null;
+            if ($('input[name=pic]')[0].files.length > 0) {
+                pic = $('input[name=pic]')[0].files[0];
+            }
+            var mark = null;
+            if ($('input[name=mark]')[0].files.length > 0) {
+                mark = $('input[name=mark]')[0].files[0];
+            }
+            if ((algorithm === 'LSB' && marked_pic) ||
+                (algorithm === 'DCT' && marked_pic && pic) ||
+                (algorithm === 'DWT' && marked_pic && mark)) {
+                var formData = new FormData();
+                formData.append('algorithm', algorithm);
+                formData.append('marked_pic', marked_pic);
+                formData.append('pic', pic);
+                formData.append('mark', mark);
+                $.ajax({
+                    url: 'http://localhost:5000/extract',
+                    data: formData,
+                    type: 'POST',
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data.status === 'ok') {
+                            $('#preview').attr('src', data.mark);
+                            $('#notice')
+                                .removeClass('uk-text-danger')
+                                .addClass('uk-text-success')
+                                .html('水印提取成功')
+                                .show();
+                        } else {
+                            $('#notice')
+                                .removeClass('uk-text-success')
+                                .addClass('uk-text-danger')
+                                .html(data.msg)
+                                .show();
+                        }
+                    }
+                });
+            }
+        });
+    });
 </script>
 </html>
