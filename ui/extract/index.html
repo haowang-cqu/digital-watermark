@@ -179,7 +179,7 @@
                 formData.append('pic', pic);
                 formData.append('mark', mark);
                 $.ajax({
-                    url: 'http://localhost:5000/extract',
+                    url: '/api/extract',
                     data: formData,
                     type: 'POST',
                     processData: false,

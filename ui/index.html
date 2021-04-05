@@ -170,7 +170,7 @@
             var text = $('#text').val();
             if (size && size.length > 0 && text && text.length > 0) {
                 $.ajax({
-                    url: 'http://localhost:5000/getmark',
+                    url: '/api/getmark',
                     data: {
                         size: size,
                         fontsize: fontsize,
@@ -210,7 +210,7 @@
                 formData.append('size', size);
                 formData.append('text', text);
                 $.ajax({
-                    url: 'http://localhost:5000/embed',
+                    url: '/api/embed',
                     data: formData,
                     type: 'POST',
                     processData: false,
@@ -218,7 +218,7 @@
                     dataType: 'json',
                     success: function(data) {
                         if (data.status === 'ok') {
-                            var base = '//localhost:5000/temp/';
+                            var base = '/api/temp/';
                             var mark = base + data.mark;
                             var marked_pic = base + data.marked_pic;
                             $('#preview').attr('src', marked_pic);
