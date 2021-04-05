@@ -26,7 +26,7 @@ def extract_LSB(pic, confuse=False):
             mark[i, j] = pic[i, j, 2] % 2
     mark = Image.fromarray(mark)
     if confuse:
-        mark = arnold_encode(mark)
+        mark = arnold_decode(mark)
     return mark
 
 
