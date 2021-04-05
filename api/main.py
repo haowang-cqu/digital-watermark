@@ -26,12 +26,12 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 
-@app.route('/')
+@app.route('/api')
 def hello_world():
     return 'Hello, World!'
 
 
-@app.route('/getmark')
+@app.route('/api/getmark')
 def getmark():
     fontname =  request.args.get('fontname', 'Microsoft YaHei')
     fontsize = int(request.args.get('fontsize', 15))
@@ -67,7 +67,7 @@ def do_embed(algorithm, pic, mark):
     return marked
 
 
-@app.route('/embed', methods=["POST"])
+@app.route('/api/embed', methods=["POST"])
 def embed():
     image = request.files.get('image')
     algorithm = request.form.get('algorithm')
@@ -94,7 +94,7 @@ def embed():
     return {'status': 'ok', 'mark': 'mark-'+save_name, 'marked_pic': 'marked-pic-'+save_name}
 
 
-@app.route('/extract', methods=["POST"])
+@app.route('/api/extract', methods=["POST"])
 def extract():
     algorithm = request.form.get('algorithm')
     marked_pic = request.files.get('marked_pic')
@@ -112,7 +112,7 @@ def extract():
     return {'status': 'ok', 'mark': b64_img}
 
 
-@app.route('/temp/<string:filename>', methods=['GET'])
+@app.route('/api/temp/<string:filename>', methods=['GET'])
 def get_img(filename):
     if filename is None:
         pass
