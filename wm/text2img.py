@@ -4,10 +4,10 @@ import os
 basedir = os.path.split(os.path.realpath(__file__))[0]
 
 fonts = {
-    'SimSun': basedir + 'fonts/simsun.ttc', 
-    'SimHei': basedir + 'fonts/simhei.ttf',
-    'SimKai': basedir + 'fonts/simkai.ttf',
-    'Microsoft YaHei': basedir + 'fonts/msyh.ttc'
+    'SimSun': basedir + '/fonts/simsun.ttc', 
+    'SimHei': basedir + '/fonts/simhei.ttf',
+    'SimKai': basedir + '/fonts/simkai.ttf',
+    'Microsoft YaHei': basedir + '/fonts/msyh.ttc'
 }
 
 def textwrap(text, width, font):
