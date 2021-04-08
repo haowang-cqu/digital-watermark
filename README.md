@@ -6,7 +6,7 @@
 ### 效果
 |原图|含水印图|提取水印|
 |---|---|---|
-|![原图](C:/Users/LHW/Desktop/dwm_doc_img/lena.png)|![含水印图](C:/Users/LHW/Desktop/dwm_doc_img/lsb_pic_marked.png)|![水印](C:/Users/LHW/Desktop/dwm_doc_img/lsb_ext_mark.png)|
+|![原图](./img/lena.png)|![含水印图](./img/lsb_pic_marked.png)|![水印](./img/lsb_ext_mark.png)|
 
 ## DCT
 ### 简介
@@ -15,7 +15,7 @@
 ### 效果
 |原图|含水印图|提取水印|
 |---|---|---|
-|![原图](./img/lena.png)|![含水印图](C:/Users/LHW/Desktop/dwm_doc_img/DCT_pic_marked.png)|![水印](C:/Users/LHW/Desktop/dwm_doc_img/DCT_ext_mark.png)|
+|![原图](./img/lena.png)|![含水印图](./img/DCT_pic_marked.png)|![水印](./img/DCT_ext_mark.png)|
 
 ## DWT
 ### 简介
@@ -24,5 +24,5 @@
 ### 效果
 |原图|含水印图|提取水印|
 |---|---|---|
-|![原图](./img/lena.png)|![含水印图](C:/Users/LHW/Desktop/dwm_doc_img/DWT_pic_marked.png)|![水印](C:/Users/LHW/Desktop/dwm_doc_img/DWT_ext_mark.png)|
+|![原图](./img/lena.png)|![含水印图](./img/DWT_pic_marked.png)|![水印](./img/DWT_ext_mark.png)|
 
